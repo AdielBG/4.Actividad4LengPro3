@@ -1,0 +1,124 @@
+﻿@model EstudianteViewModel;
+
+@{
+    ViewBag.Title = "Editar Estudiante";
+    Layout = "/Views/Shared/LayoutEstudiantes.cshtml";
+}
+
+<style>
+
+    form div {
+        margin-bottom: 20px;
+    }
+
+        form div label {
+            font-size: 1.2rem;
+        }
+
+</style>
+
+
+<h2>Estudiantes Registrados</h2>
+<br />
+
+
+
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<div class="container mb-3">
+    <form class="form-control" action="/Estudiantes/Editar" method="post">
+        <input type="hidden" name="Matricula" value="@Model.Matricula" />
+
+        <div>
+            <label class="form-label">Nombre completo:</label>
+            <input class="form-control" type="text" name="NombreCompleto" value="@Model.NombreCompleto" />
+        </div>
+
+        <div>
+            <label class="form-label" asp-for="Carrera"></label>
+            <select class="form-select" asp-for="Carrera" asp-items="@(new SelectList (
+                                                                                                         new[] { "Ingeniería de Software",
+                                                                                                                 "Contabilidad",
+                                                                                                                 "Enfermería",
+                                                                                                                 "Odontología",
+                                                                                                                 "Derecho" }
+                                                                                                                  ))">
+                <option value="">-- Seleccione una carrera --</option>
+            </select>
+            <span asp-validation-for="Carrera" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label class="form-label">Correo institucional:</label>
+            <input class="form-control" type="email" name="CorreoInstitucional" value="@Model.CorreoInstitucional" />
+        </div>
+
+        <div>
+            <label class="form-label">Teléfono:</label>
+            <input class="form-control" type="tel" name="Telefono" value="@Model.Telefono" />
+        </div>
+
+        <div>
+            <label class="form-label">Fecha de nacimiento:</label>
+            <input class="form-control" type="date" name="FechaNacimiento" value="@Model.FechaNacimiento.ToString("yyyy-MM-dd")" />
+        </div>
+
+        <div>
+            <label class="form-label">Género:</label>
+            <input type="radio" name="Genero" value="Masculino" @(Model.Genero == "Masculino" ? "checked" : "") /> Masculino
+            <input type="radio" name="Genero" value="Femenino" @(Model.Genero == "Femenino" ? "checked" : "") /> Femenino<br />
+        </div>
+
+        <div>
+            <label class="form-label" asp-for="Turno"></label>
+            <select class="form-select" asp-for="Turno" asp-items="@(new SelectList(
+                                                                                                     new[] { "Mañana",
+                                                                                                             "Tarde",
+                                                                                                             "Noche" }
+                                                                                                            ))">
+                <option value="">-- Seleccione turno --</option>
+            </select>
+            <span asp-validation-for="Turno" class="text-danger"></span>
+        </div>
+
+
+        <div>
+            <label class="form-label" asp-for="TipoIngreso">Tipo de Ingreso</label>
+            <select class="form-select" asp-for="TipoIngreso" asp-items="@(new SelectList(
+                                                                                                                 new[] { "Nuevo Ingreso",
+                                                                                                                         "Reingreso",
+                                                                                                                         "Transferencia" }
+                                                                                                                        ))">
+                <option value="">-- Seleccione tipo de ingreso --</option>
+            </select>
+            <span asp-validation-for="TipoIngreso" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label class="form-label">
+                <input type="checkbox" name="EstaBecado" value="true" @(Model.EstaBecado ? "checked" : "") /> ¿Está becado?
+            </label>
+        </div>
+
+        <div>
+            <label class="form-label">Porcentaje de beca:</label><br />
+            <input class="form-control" type="number" name="PorcentajeBeca" value="@Model.PorcentajeBeca" />
+        </div>
+
+        @* <div>
+    <label class="form-label">
+        <input type="checkbox" name="TerminosYCondiciones" value="true" @(Model.TerminosYCondiciones ? "checked" : "") />
+        Acepto los términos y condiciones
+    </label>
+    </div> *@
+
+        <br /><br />
+
+        <button class="btn btn-success" type="submit">Guardar cambios</button>
+        <a class="btn btn-danger" href="/Estudiantes/Lista">Cancelar</a>
+    </form>
+</div>

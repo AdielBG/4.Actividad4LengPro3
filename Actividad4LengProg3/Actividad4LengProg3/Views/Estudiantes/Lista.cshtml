@@ -1,0 +1,65 @@
+﻿@model List<Actividad4LengProg3.Models.EstudianteViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Estudiantes Registrados";
+    Layout = "/Views/Shared/LayoutEstudiantes.cshtml";
+}
+
+<h2>Estudiantes Registrados</h2>
+<br />
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class=" table table-primary table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Matrícula</th>
+                <th>Carrera</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Fecha Nac.</th>
+                <th>Género</th>
+                <th>Turno</th>
+                <th>Tipo Ingreso</th>
+                <th>Beca</th>
+                <th>Porc. Beca</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var est in Model)
+            {
+                <tr>
+                    <td>@est.NombreCompleto</td>
+                    <td>@est.Matricula</td>
+                    <td>@est.Carrera</td>
+                    <td>@est.CorreoInstitucional</td>
+                    <td>@est.Telefono</td>
+                    <td>@est.FechaNacimiento.ToShortDateString()</td>
+                    <td>@est.Genero</td>
+                    <td>@est.Turno</td>
+                    <td>@est.TipoIngreso</td>
+                    <td>@(est.EstaBecado ? "Sí" : "No")</td>
+                    <td>@est.PorcentajeBeca %</td>
+                    <td>
+                        <a class="btn btn-success m-2" href="/Estudiantes/Editar?matricula=@est.Matricula">Editar</a>
+                        <a class="btn btn-danger" href="/Estudiantes/Eliminar?matricula=@est.Matricula">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No hay estudiantes registrados aún.</p>
+}
+
+

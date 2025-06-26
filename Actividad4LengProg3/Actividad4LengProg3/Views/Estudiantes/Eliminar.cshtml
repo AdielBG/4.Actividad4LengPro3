@@ -1,0 +1,35 @@
+﻿@model EstudianteViewModel;
+
+@{
+    ViewBag.Title = "Eliminar Estudiante";
+    Layout = "/Views/Shared/LayoutEstudiantes.cshtml";
+}
+
+<h2>Eliminar Estudiante</h2>
+<br />
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+
+<div class="container">
+
+    <p>¿Estás seguro de que deseas eliminar el siguiente estudiante?</p>
+
+    <ul>
+        <li><strong>Nombre:</strong> @Model.NombreCompleto</li>
+        <li><strong>Matrícula:</strong> @Model.Matricula</li>
+        <li><strong>Carrera:</strong> @Model.Carrera</li>
+        <li><strong>Correo:</strong> @Model.CorreoInstitucional</li>
+    </ul>
+
+    <form asp-action="EliminarConfirmado" method="post">
+        <input type="hidden" name="matricula" value="@Model.Matricula" />
+        <button class="btn btn-danger" type="submit">Eliminar</button>
+        <a class="btn btn-success" href="/Estudiantes/Lista">Cancelar</a>
+    </form>
+
+</div>
+
