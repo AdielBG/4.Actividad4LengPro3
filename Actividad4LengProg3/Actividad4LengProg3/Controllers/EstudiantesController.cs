@@ -6,7 +6,13 @@ namespace Actividad4LengProg3.Controllers
 {
     public class EstudiantesController : Controller
     {
-        public static List<EstudianteViewModel> estudiantes = new List<EstudianteViewModel>();
+        private readonly AppDbContext _context;
+
+        public EstudiantesController(AppDbContext context)
+        {
+            _context = context;
+        }//Inyecta el contexto de base de datos para usarlo en todo el controlador.
+
         public IActionResult Index()
         {
             return View();
@@ -16,21 +22,21 @@ namespace Actividad4LengProg3.Controllers
         [HttpPost]
         public IActionResult Registrar(EstudianteViewModel estudiante)
         {
-            if (ModelState.IsValid) //Verificar si los datos del modelo que se envían son válidos.
+            if (ModelState.IsValid)
             {
-                estudiantes.Add(estudiante);
+                _context.Estudiantes.Add(estudiante);
+                _context.SaveChanges(); //  Muy importante
                 TempData["Mensaje"] = "Estudiante registrado exitosamente.";
-                return RedirectToAction("Lista"); //Redirigir al usuario a la accion Lista
-
+                return RedirectToAction("Lista");
             }
-
-            return View();
+            return View(estudiante);
         }
 
 
         public IActionResult Lista()
         {
 
+            var estudiantes = _context.Estudiantes.ToList();
             return View(estudiantes);
 
         }
@@ -38,7 +44,7 @@ namespace Actividad4LengProg3.Controllers
         [HttpGet]
         public IActionResult Editar(string matricula)
         {
-            var estudiante = estudiantes.FirstOrDefault(e => e.Matricula == matricula);
+            var estudiante = _context.Estudiantes.FirstOrDefault(e => e.Matricula == matricula);
             if (estudiante == null)
             {
                 TempData["Mensaje"] = "No existe el usuario indicado";
@@ -55,7 +61,7 @@ namespace Actividad4LengProg3.Controllers
         {
             if (ModelState.IsValid)
             {
-                EstudianteViewModel original = estudiantes.FirstOrDefault(e => e.Matricula.Equals(estudiante.Matricula));
+                var original = _context.Estudiantes.FirstOrDefault(e => e.Matricula == estudiante.Matricula);
 
                 if (original == null)
                 {
@@ -63,7 +69,7 @@ namespace Actividad4LengProg3.Controllers
                     return RedirectToAction("Lista");
                 }
 
-                // Actualiza los campos necesarios
+                // Actualizar campos
                 original.NombreCompleto = estudiante.NombreCompleto;
                 original.Carrera = estudiante.Carrera;
                 original.CorreoInstitucional = estudiante.CorreoInstitucional;
@@ -73,7 +79,11 @@ namespace Actividad4LengProg3.Controllers
                 original.Turno = estudiante.Turno;
                 original.TipoIngreso = estudiante.TipoIngreso;
                 original.PorcentajeBeca = estudiante.PorcentajeBeca;
-                //original.TerminosYCondiciones = estudiante.TerminosYCondiciones;
+                original.EstaBecado = estudiante.EstaBecado;
+                original.TerminosYCondiciones = estudiante.TerminosYCondiciones;
+
+                _context.Update(original); //  Agregado
+                _context.SaveChanges();    //  Agregado
 
                 TempData["Mensaje"] = "Actualizaciones realizadas correctamente";
                 return RedirectToAction("Lista");
@@ -86,7 +96,7 @@ namespace Actividad4LengProg3.Controllers
 
         public IActionResult Eliminar(string matricula)
         {
-            var estudiante = estudiantes.FirstOrDefault(e => e.Matricula == matricula);
+            var estudiante = _context.Estudiantes.FirstOrDefault(e => e.Matricula == matricula);
             if (estudiante == null)
             {
                 TempData["Mensaje"] = "No existe el usuario indicado";
@@ -98,11 +108,12 @@ namespace Actividad4LengProg3.Controllers
         [HttpPost]
         public IActionResult EliminarConfirmado(string matricula)
         {
-            var estudiante = estudiantes.FirstOrDefault(e => e.Matricula == matricula);
+            var estudiante = _context.Estudiantes.FirstOrDefault(e => e.Matricula == matricula);
             if (estudiante != null)
             {
-                TempData["Mensaje"] = "Estudiante sustraido correctamente";
-                estudiantes.Remove(estudiante);
+                _context.Estudiantes.Remove(estudiante);
+                _context.SaveChanges(); //  Necesario
+                TempData["Mensaje"] = "Estudiante eliminado correctamente";
             }
 
             return RedirectToAction("Lista");

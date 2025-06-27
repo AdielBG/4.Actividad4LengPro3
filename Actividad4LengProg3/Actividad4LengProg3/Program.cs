@@ -1,4 +1,11 @@
+using Actividad4LengProg3.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options => 
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//Registro de la clase AppDbContext en el contenedor de dependencias.
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
