@@ -7,6 +7,7 @@ namespace Actividad4LengProg3.Models
         [StringLength(100, ErrorMessage = "El nombre no puede tener más de 100 caracteres.")]
         public string NombreCompleto { get; set; }
 
+        [Key]
         [Required(ErrorMessage = "Debe ingresar su Matricula")]
         [StringLength(15, MinimumLength = 6, ErrorMessage = "La matrícula debe tener entre 6 y 15 caracteres.")]
         public string Matricula { get; set; }
