@@ -1,0 +1,82 @@
+﻿@model MateriaViewModel;
+
+
+
+@{
+    ViewData["Title"] = "Registro de Materia";
+    Layout = "/Views/Shared/LayoutMaterias.cshtml";
+}
+
+<style>
+
+     form div{
+        margin-bottom:20px;
+
+    }
+
+    form div label{
+        font-size:1.2rem;
+    }
+
+</style>
+
+<h2>Registro de Materia</h2>
+<br />
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<div class="container mb-3">
+
+    <form class="form-control" asp-action="Registrar" asp-controller="Materias" method="post">
+        <div>
+            <label class="form-label" asp-for="Codigo">Codigo</label>
+            <input class="form-control" asp-for="Codigo" />
+            <span asp-validation-for="Codigo" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label class="form-label" asp-for="Nombre"></label>
+            <input class="form-control" asp-for="Nombre" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label class="form-label" asp-for="Creditos">Creditos</label>
+            <input class="form-control" asp-for="Creditos" type="number" min="1" max="10" />
+            <span asp-validation-for="Creditos" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label class="form-label" asp-for="Carrera"></label>
+            <select class="form-select" asp-for="Carrera" asp-items="@(new SelectList (
+                                                                                        new[] { "Ingeniería de Software",
+                                                                                                "Contabilidad",
+                                                                                                "Enfermería",
+                                                                                                "Odontología",                                                                                                                                        "Derecho" }
+                                                                                        ))">
+                <option value="">-- Seleccione una carrera --</option>
+            </select>
+            <span asp-validation-for="Carrera" class="text-danger"></span>
+        </div>
+
+        <br />
+
+        <div>
+            <button class="btn btn-primary" type="submit">Registrar</button>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
+
