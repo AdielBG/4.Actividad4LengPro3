@@ -8,7 +8,7 @@ namespace Actividad4LengProg3.Models
         //permite inyectar opciones de configuración del contexto, como la cadena de conexión y el proveedor de base de datos
 
         public DbSet<EstudianteViewModel> Estudiantes { get; set; }
-        //public DbSet<MateriaViewModel> Materias { get; set; }
+        public DbSet<MateriaViewModel> Materias { get; set; }
         //public DbSet<CalificacionViewModel> Calificaciones { get; set; }
 
     }
