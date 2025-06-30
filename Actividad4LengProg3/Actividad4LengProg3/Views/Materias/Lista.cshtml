@@ -1,0 +1,51 @@
+﻿@model List<Actividad4LengProg3.Models.MateriaViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Materias Registrados";
+    Layout = "/Views/Shared/LayoutMaterias.cshtml";
+}
+
+<h2>Materias Registradas</h2>
+<br />
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class=" table table-primary table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Credito</th>
+                <th>Carrera</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mat in Model)
+            {
+                <tr>
+                    <td>@mat.Codigo</td>
+                    <td>@mat.Nombre</td>
+                    <td>@mat.Creditos</td>
+                    <td>@mat.Carrera</td>
+                    <td>
+                        <a class="btn btn-success m-2" href="/Materias/Editar?codigo=@mat.Codigo">Editar</a>
+                        <a class="btn btn-danger" href="/Materias/Eliminar?codigo=@mat.Codigo">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No hay Materias registradas aún.</p>
+}
+
+
