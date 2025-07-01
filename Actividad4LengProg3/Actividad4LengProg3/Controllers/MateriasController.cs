@@ -84,32 +84,30 @@ namespace Actividad4LengProg3.Controllers
 
 
 
-        //    public IActionResult Eliminar(string matricula)
-        //    {
-        //        var estudiante = _context.Estudiantes.FirstOrDefault(e => e.Matricula == matricula);
-        //        if (estudiante == null)
-        //        {
-        //            TempData["Mensaje"] = "No existe el usuario indicado";
-        //            return RedirectToAction("Lista");
-        //        }
-        //        return View(estudiante);
-        //    }
+        public IActionResult Eliminar(string codigo)
+        {
+            var materia = _context.Materias.FirstOrDefault(m => m.Codigo == codigo);
+            if (materia == null)
+            {
+                TempData["Mensaje"] = "No existe la materia indicado";
+                return RedirectToAction("Lista");
+            }
+            return View(materia);
+        }
 
-        //    [HttpPost]
-        //    public IActionResult EliminarConfirmado(string matricula)
-        //    {
-        //        var estudiante = _context.Estudiantes.FirstOrDefault(e => e.Matricula == matricula);
-        //        if (estudiante != null)
-        //        {
-        //            _context.Estudiantes.Remove(estudiante);
-        //            _context.SaveChanges(); //  Necesario
-        //            TempData["Mensaje"] = "Estudiante eliminado correctamente";
-        //        }
+        [HttpPost]
+        public IActionResult EliminarConfirmado(string codigo)
+        {
+            var materia = _context.Materias.FirstOrDefault(m => m.Codigo == codigo);
+            if (materia != null)
+            {
+                _context.Materias.Remove(materia);
+                _context.SaveChanges(); 
+                TempData["Mensaje"] = "Materia eliminado correctamente";
+            }
 
-        //        return RedirectToAction("Lista");
-        //    }
+            return RedirectToAction("Lista");
+        }
 
-
-        //}
     }
 }

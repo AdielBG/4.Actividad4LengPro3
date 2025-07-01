@@ -1,0 +1,35 @@
+﻿@model MateriaViewModel;
+
+@{
+    ViewBag.Title = "Eliminar Materia";
+    Layout = "/Views/Shared/LayoutMaterias.cshtml";
+}
+
+<h2>Eliminar Materia</h2>
+<br />
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+
+<div class="container">
+
+    <p>¿Estás seguro de que deseas eliminar la siguiente Materia?</p>
+
+    <ul>
+        <li><strong>Codigo:</strong> @Model.Codigo</li>
+        <li><strong>Nombre:</strong> @Model.Nombre</li>
+        <li><strong>Creditos:</strong> @Model.Creditos</li>
+        <li><strong>Carrera:</strong> @Model.Carrera</li>
+    </ul>
+
+    <form asp-action="EliminarConfirmado" method="post">
+        <input type="hidden" name="codigo" value="@Model.Codigo" />
+        <button class="btn btn-danger" type="submit">Eliminar</button>
+        <a class="btn btn-success" href="/Materias/Lista">Cancelar</a>
+    </form>
+
+</div>
+
