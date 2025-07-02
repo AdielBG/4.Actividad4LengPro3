@@ -9,7 +9,7 @@ namespace Actividad4LengProg3.Models
 
         public DbSet<EstudianteViewModel> Estudiantes { get; set; }
         public DbSet<MateriaViewModel> Materias { get; set; }
-        //public DbSet<CalificacionViewModel> Calificaciones { get; set; }
+        public DbSet<CalificacionViewModel> Calificaciones { get; set; }
 
     }
 }
