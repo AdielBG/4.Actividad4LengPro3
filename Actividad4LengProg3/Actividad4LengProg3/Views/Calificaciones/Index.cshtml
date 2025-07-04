@@ -1,0 +1,75 @@
+﻿@model CalificacionViewModel;
+
+
+
+@{
+    ViewData["Title"] = "Registro de Calificaciones";
+    Layout = "/Views/Shared/LayoutCalificaciones.cshtml";
+}
+
+<style>
+
+    form div {
+        margin-bottom: 20px;
+    }
+
+        form div label {
+            font-size: 1.2rem;
+        }
+
+</style>
+
+<h2>Registro de Calificaciones</h2>
+<br />
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<div class="container mb-3">
+
+    <form class="form-control" asp-action="Registrar" asp-controller="Calificaciones" method="post">
+        <div>
+            <label class="form-label" asp-for="MatriculaEstudiante">MatriculaEstudiante</label>
+            <input class="form-control" asp-for="MatriculaEstudiante" />
+            <span asp-validation-for="MatriculaEstudiante" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label class="form-label" asp-for="CodigoMateria"></label>
+            <input class="form-control" asp-for="CodigoMateria" />
+            <span asp-validation-for="CodigoMateria" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label class="form-label" asp-for="Nota">Nota</label>
+            <input class="form-control" asp-for="Nota" type="number" min="0" max="100" />
+            <span asp-validation-for="Nota" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label class="form-label" asp-for="Periodo">Periodo</label>
+            <input class="form-control" asp-for="Periodo" />
+            <span asp-validation-for="Nota" class="text-danger"></span>
+        </div>
+
+        <br />
+       
+
+        <div>
+            <button class="btn btn-primary" type="submit">Registrar</button>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
+
