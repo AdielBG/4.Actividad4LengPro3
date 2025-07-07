@@ -76,5 +76,50 @@ namespace Actividad4LengProg3.Controllers
             return View(calificaciones);
         }
 
+
+        [HttpGet]
+        public IActionResult Editar(int id)
+        {
+            var calificacion = _context.Calificaciones.FirstOrDefault(c => c.Id == id);
+            if (calificacion == null)
+            {
+                TempData["Mensaje"] = "No existe la materia indicado";
+                return RedirectToAction("Lista");
+            }
+
+            return View(calificacion);
+        }
+
+
+        [HttpPost]
+        public IActionResult Editar(CalificacionViewModel calificacion)
+        {
+            if (ModelState.IsValid)
+            {
+                var original = _context.Calificaciones.FirstOrDefault(c => c.Id == calificacion.Id);
+
+                if (original == null)
+                {
+                    TempData["Mensaje"] = "No existe la calificación indicado";
+                    return RedirectToAction("Lista");
+                }
+
+                // Actualizar campos
+                original.MatriculaEstudiante = calificacion.MatriculaEstudiante;
+                original.CodigoMateria = calificacion.CodigoMateria;
+                original.Nota = calificacion.Nota;
+                original.Periodo = calificacion.Periodo;
+
+                _context.Update(original);
+                _context.SaveChanges();
+
+                TempData["Mensaje"] = "Actualizaciones realizadas correctamente";
+                return RedirectToAction("Lista");
+            }
+
+            return View(calificacion);
+        }
+
+
     }
 }

@@ -6,6 +6,11 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 
+var cultureInfo = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+//Esto fuerza la cultura del servidor a "en-US", la cual usa punto decimal (.),
+//y así los decimal, double, etc. serán correctamente parseados.
 
 builder.Services.AddDbContext<AppDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

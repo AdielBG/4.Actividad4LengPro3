@@ -1,0 +1,68 @@
+﻿@model CalificacionViewModel;
+
+@{
+    ViewBag.Title = "Editar Calificacion";
+    Layout = "/Views/Shared/LayoutCalificaciones.cshtml";
+}
+
+<style>
+
+    form div {
+        margin-bottom: 20px;
+    }
+
+        form div label {
+            font-size: 1.2rem;
+        }
+
+</style>
+
+
+<h2>Materias Registradas</h2>
+<br />
+
+
+
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<div class="container mb-3">
+    <form class="form-control" action="/Calificaciones/Editar" method="post">
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <div>
+            <label class="form-label">MatriculaEstudiante:</label>
+            <input class="form-control" type="text" name="MatriculaEstudiante" value="@Model.MatriculaEstudiante" />
+        </div>
+
+
+
+        <div>
+            <label class="form-label">CodigoMateria:</label>
+            <input class="form-control" type="text" name="CodigoMateria" value="@Model.CodigoMateria" />
+        </div>
+
+
+        <div>
+            <label class="form-label">Nota:</label>
+            <input class="form-control" type="number" step="0.01" min="0" max="100" name="Nota" value="@Model.Nota.ToString(System.Globalization.CultureInfo.InvariantCulture)" />
+                                                                                                       @* Esto formatea el número decimal con punto como separador, que es lo que espera HTML.*@
+
+        </div>
+
+
+        <div>
+            <label class="form-label">Periodo:</label>
+            <input class="form-control" type="text" name="Periodo" value="@Model.Periodo" />
+        </div>
+
+
+        <br /><br />
+
+        <button class="btn btn-success" type="submit">Guardar cambios</button>
+        <a class="btn btn-danger" href="/Calificaciones/Lista">Cancelar</a>
+    </form>
+</div>
