@@ -1,0 +1,35 @@
+﻿@model CalificacionViewModel;
+
+@{
+    ViewBag.Title = "Eliminar Calificación";
+    Layout = "/Views/Shared/LayoutCalificaciones.cshtml";
+}
+
+<h2>Eliminar Calificación</h2>
+<br />
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+
+<div class="container">
+
+    <p>¿Estás seguro de que deseas eliminar la siguiente Calificación?</p>
+
+    <ul>
+        <li><strong>MatriculaEstudiante:</strong> @Model.MatriculaEstudiante</li>
+        <li><strong>CodigoMateria:</strong> @Model.CodigoMateria</li>
+        <li><strong>Nota:</strong> @Model.Nota</li>
+        <li><strong>Periodo:</strong> @Model.Periodo</li>
+    </ul>
+
+    <form asp-action="EliminarConfirmado" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button class="btn btn-danger" type="submit">Eliminar</button>
+        <a class="btn btn-success" href="/Calificaciones/Lista">Cancelar</a>
+    </form>
+
+</div>
+

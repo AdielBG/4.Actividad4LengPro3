@@ -92,7 +92,7 @@ namespace Actividad4LengProg3.Controllers
 
 
         [HttpPost]
-        public IActionResult Editar(CalificacionViewModel calificacion)
+        public IActionResult Editar(CalificacionViewModel calificacion) 
         {
             if (ModelState.IsValid)
             {
@@ -118,6 +118,32 @@ namespace Actividad4LengProg3.Controllers
             }
 
             return View(calificacion);
+        }
+
+
+        public IActionResult Eliminar(int id)
+        {
+            var calificacion = _context.Calificaciones.FirstOrDefault(c => c.Id == id);
+            if (calificacion == null)
+            {
+                TempData["Mensaje"] = "No existe la calificación indicado";
+                return RedirectToAction("Lista");
+            }
+            return View(calificacion);
+        }
+
+        [HttpPost]
+        public IActionResult EliminarConfirmado(int id)
+        {
+            var calificacion = _context.Calificaciones.FirstOrDefault(c => c.Id == id);
+            if (calificacion != null)
+            {
+                _context.Calificaciones.Remove(calificacion);
+                _context.SaveChanges();
+                TempData["Mensaje"] = "Calificación eliminado correctamente";
+            }
+
+            return RedirectToAction("Lista");
         }
 
 
