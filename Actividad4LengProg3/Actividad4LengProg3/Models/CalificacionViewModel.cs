@@ -28,9 +28,9 @@ public class CalificacionViewModel
 
     // Propiedades de navegación para las relaciones
     [ForeignKey("MatriculaEstudiante")]
-    public virtual EstudianteViewModel Estudiante { get; set; }
+    public virtual EstudianteViewModel? Estudiante { get; set; }
 
     [ForeignKey("CodigoMateria")]
-    public virtual MateriaViewModel Materia { get; set; }
+    public virtual MateriaViewModel? Materia { get; set; }
 }
 

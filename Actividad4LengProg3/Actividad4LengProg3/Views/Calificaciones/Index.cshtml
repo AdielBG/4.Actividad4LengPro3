@@ -27,6 +27,15 @@
     <div class="alert alert-success">@TempData["Mensaje"]</div>
 }
 
+@* NUEVO: Mostrar errores específicos de validación *@
+@if (TempData["Errores"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>Errores encontrados:</strong><br />
+        @TempData["Errores"]
+    </div>
+}
+
 <div class="container mb-3">
 
     <form class="form-control" asp-action="Registrar" asp-controller="Calificaciones" method="post">
@@ -44,7 +53,7 @@
 
         <div>
             <label class="form-label" asp-for="Nota">Nota</label>
-            <input class="form-control" asp-for="Nota" type="number" min="0" max="100" />
+            <input class="form-control" asp-for="Nota" type="number" min="0" max="100" step="0.01" />
             <span asp-validation-for="Nota" class="text-danger"></span>
         </div>
 
